@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int32_t search(vector<int>& nums, int target) {
+    bool search(vector<int>& nums, int target) {
         int n = nums.size();
         if (n == 0) return false;
         int end = n - 1;
@@ -10,7 +10,7 @@ public:
             int mid = start + (end - start) / 2;
 
             if (nums[mid] == target) {
-                return mid;
+                return true;
             }
 
             if (!isBinarySearchHelpful(nums, start, nums[mid])) {
@@ -37,7 +37,7 @@ public:
                 }
             }
         }
-        return -1;
+        return false;
     }
 
     // returns true if we can reduce the search space in current binary search space
