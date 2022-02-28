@@ -11,7 +11,7 @@ public:
                 return nums[low];
             }
             int32_t mid = low + ((high - low) >> 1);
-            if (nums[mid] < nums[low]) {
+            if (nums[low] > nums[mid]) {
                 if (mid == 0 || nums[mid - 1] > nums[mid])  {
                     return nums[mid];
                 }
@@ -19,8 +19,9 @@ public:
             } else {
                 if (nums[mid + 1] < nums[mid]) {
                     return nums[mid + 1];
+                } else {
+                    low = mid + 1;
                 }
-                low = mid + 1;
             }
         }
         return nums[low];
