@@ -18,32 +18,32 @@ public:
 
 class Solution {
 public:
-    Node* connect(Node* root) {
-        std::vector<std::vector<Node*>> vs;
-        std::vector<Node*> v1;
-        std::vector<Node*> v2;
-        vs.emplace_back(std::move(v1));
-        vs.emplace_back(std::move(v2));
-        int32_t cur = 0;
-        if (root) {
-            vs[cur].emplace_back(root);
-        }
-        while(!vs[cur].empty()) {
-            int32_t next = 1 - cur;
-            Node* pre = nullptr;
-            for (auto x : vs[cur]) {
-                if (pre != nullptr) {
-                    pre->next = x;
-                }
-                pre = x;
-                if (x->left) {
-                    vs[next].emplace_back(x->left);
-                }
-                if (x->right) {
-                    vs[next].emplace_back(x->right);
-                }
-            }
-            cur = next;
-        }
+  Node *connect(Node *root) {
+    std::vector<std::vector<Node *>> vs;
+    std::vector<Node *> v1;
+    std::vector<Node *> v2;
+    vs.emplace_back(std::move(v1));
+    vs.emplace_back(std::move(v2));
+    int32_t cur = 0;
+    if (root) {
+      vs[cur].emplace_back(root);
     }
+    while (!vs[cur].empty()) {
+      int32_t next = 1 - cur;
+      Node *pre = nullptr;
+      for (auto x : vs[cur]) {
+        if (pre != nullptr) {
+          pre->next = x;
+        }
+        pre = x;
+        if (x->left) {
+          vs[next].emplace_back(x->left);
+        }
+        if (x->right) {
+          vs[next].emplace_back(x->right);
+        }
+      }
+      cur = next;
+    }
+  }
 };

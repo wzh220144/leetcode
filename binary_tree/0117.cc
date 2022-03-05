@@ -18,32 +18,32 @@ public:
 
 class Solution {
 public:
-    Node* connect(Node* root) {
-        Node* leftmost = root;
-        while(leftmost) {
-            Node* cur = leftmost;
-            leftmost = nullptr;
-            Node* pre = nullptr;
-            while(cur) {
-                if (cur->left) {
-                    if (pre) {
-                        pre->next = cur->left;
-                    } else {
-                        leftmost = cur->left;
-                    }
-                    pre = cur->left;
-                }
-                if (cur->right) {
-                    if (pre) {
-                        pre->next = cur->right;
-                    } else {
-                        leftmost = cur->right;
-                    }
-                    pre = cur->right;
-                }
-                cur = cur->next;
-            }
+  Node *connect(Node *root) {
+    Node *leftmost = root;
+    while (leftmost) {
+      Node *cur = leftmost;
+      leftmost = nullptr;
+      Node *pre = nullptr;
+      while (cur) {
+        if (cur->left) {
+          if (pre) {
+            pre->next = cur->left;
+          } else {
+            leftmost = cur->left;
+          }
+          pre = cur->left;
         }
-        return root;
+        if (cur->right) {
+          if (pre) {
+            pre->next = cur->right;
+          } else {
+            leftmost = cur->right;
+          }
+          pre = cur->right;
+        }
+        cur = cur->next;
+      }
     }
+    return root;
+  }
 };
