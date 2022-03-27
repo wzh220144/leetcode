@@ -1,59 +1,46 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
- * right(right) {}
- * };
- */
 class Solution {
 public:
-  pair<int32_t, bool> travel(TreeNode *root) {
-    if (root->left && root->right) {
-      auto l = travel(root->left);
-      auto r = travel(root->right);
-      int32_t c = 0;
-      bool s = false;
-      if (l.second && r.second) {
-        if (root->left->val == root->right->val &&
-            root->left->val == root->val) {
-          c = 1;
-          s = true;
+  int32_t search(vector<int32_t> &a) {
+    int32_t low = 0;
+    int32_t high = a.size() - 1;
+    while (low <= high) {
+      int32_t mid = low + ((high - low) >> 1);
+      if (a[mid] == 0) {
+        if (mid == 0 || a[mid - 1] == 1) {
+          return mid;
         }
+        high = mid - 1;
+      } else {
+        low = mid + 1;
       }
-      return pair<int32_t, bool>(l.first + r.first + c, s);
-    } else if (root->left) {
-      auto l = travel(root->left);
-      int32_t c = 0;
-      bool s = false;
-      if (l.second && root->left->val == root->val) {
-        c = 1;
-        s = true;
-      }
-      return pair<int32_t, bool>(l.first + c, s);
-    } else if (root->right) {
-      auto r = travel(root->right);
-      int32_t c = 0;
-      bool s = false;
-      if (r.second && root->right->val == root->val) {
-        c = 1;
-        s = true;
-      }
-      return pair<int32_t, bool>(r.first + c, s);
-    } else {
-      return pair<int32_t, bool>(1, true);
     }
+    return -1;
   }
 
-  int countUnivalSubtrees(TreeNode *root) {
-    if (!root) {
-      return 0;
+  vector<int> kWeakestRows(vector<vector<int>> &mat, int k) {
+    vector<std::pair<int32_t, int32_t>> res;
+    for (int32_t i = 0; i < mat.size(); ++i) {
+      int32_t pos = search(mat[i]);
+      int32_t one_num = pos == -1 ? mat[i].size() : pos;
+      int32_t zero_num = mat[i].size() - one_num;
+      res.emplace_back(make_pair(one_num, i));
     }
-    auto res = travel(root);
-    return res.first;
+    sort(res.begin(), res.end(),
+         [](const pair<int32_t, int32_t> &a, const pair<int32_t, int32_t> &b) {
+           if (a.first == b.first) {
+             return a.second < b.second;
+           }
+           return a.first < b.first;
+         });
+    vector<int32_t> t;
+    int32_t cnt = 0;
+    for (const auto &a : res) {
+      if (cnt == k) {
+        break;
+      }
+      t.emplace_back(a.second);
+      ++cnt;
+    }
+    return t;
   }
 };
